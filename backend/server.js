@@ -43,13 +43,21 @@ function addItem (request, response) {
 app.get("/get/items", getItems)
 //** week5, get all items from the json database*/
   function getItems (request, response) {
-    //begin here
+    var data = fs.readFileSync('database.json'); // read in todo lists stored in database.json file
     
+    response.json(JSON.parse(data));  // return data from the file (parsed as JSON file)
   } 
 
 app.get("/get/searchitem",searchItems)
 //**week 5, search items service */
   function searchItems (request, response) {
     //begin here
+    var searchField = request.query.taskname;
+
+    var json = JSON.parse (fs.readFileSync('database.json'));
+
+    var returnData = json.filter(jsondata => jsondata.Task === searchField);
+
+    response.json(returnData);
     
   }
